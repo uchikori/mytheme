@@ -55,6 +55,13 @@ function mytheme_register_block_styles(){
       'name' => 'scroll-down',
       'label' => 'スクロールダウン'
     )
-    );
+  );
+  register_block_style(
+    'core/columns',
+    array(
+      'name' => 'reverse',
+      'slug' => 'モバイル逆順'
+    )
+  );
 }
 add_action('init', 'mytheme_register_block_styles');

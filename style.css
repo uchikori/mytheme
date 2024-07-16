@@ -75,3 +75,8 @@ p.is-style-scroll-down::before {
   background-color: var(--wp--preset--color--primary);
   animation: scroll 4s infinite;
 }
+@media (max-width: 781px) {
+  .wp-block-columns.is-style-reverse {
+    flex-direction: column-reverse;
+  }
+}
