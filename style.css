@@ -13,7 +13,22 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: mytheme
 Tags: 
 */
-
+@keyframes scroll {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
 :is(h1, h2, h3, h4, h5, h6).is-style-decoration-line {
   padding-bottom: 0.5em;
   border: solid 12px transparent;
@@ -40,4 +55,23 @@ Tags:
 
 .wp-block-template-part.is-style-rm-margin-top {
   margin-top: 0;
+}
+
+p.is-style-scroll-down {
+  position: relative;
+  height: 144px;
+  border-right: solid 1px var(--wp--preset--color--dark-gray);
+  writing-mode: vertical-rl;
+}
+p.is-style-scroll-down::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -7px;
+  width: 12px;
+  height: 12px;
+  border: solid 1px var(--wp--preset--color--dark-gray);
+  border-radius: 50%;
+  background-color: var(--wp--preset--color--primary);
+  animation: scroll 4s infinite;
 }

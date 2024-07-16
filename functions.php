@@ -49,5 +49,12 @@ function mytheme_register_block_styles(){
       'label' => '上マージン削除'
     )
   );
+  register_block_style(
+    'core/paragraph',
+    array(
+      'name' => 'scroll-down',
+      'label' => 'スクロールダウン'
+    )
+    );
 }
 add_action('init', 'mytheme_register_block_styles');
