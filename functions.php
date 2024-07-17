@@ -77,3 +77,68 @@ function mytheme_block_pattern(){
   // remove_theme_support('core-block-patterns');
 }
 add_action('init', 'mytheme_block_pattern');
+
+//使用許可ブロック
+// function mytheme_allowed_block_types($allowed_block_types, $editor_context){
+//   if(!empty($editor_context->post)){
+//     $allowed_block_types = array(
+//       'core/heading',
+//       'core/paragraph',
+//       'core/image'
+//     );
+//   }
+
+//   return $allowed_block_types;
+// }
+// add_filter('allowed_block_types_all', 'mytheme_allowed_block_types', 10, 2);
+
+//メタデータ
+function mytheme_meta(){
+  //サイト名
+  $site_name = esc_attr(get_bloginfo('name'));
+  //ページのタイトル
+  $title = esc_attr(wp_get_document_title());
+
+  //代替アイキャッチ画像
+  $image_url = esc_url(get_theme_file_uri('assets/images/ancient.jpg'));
+  $image_w = '1800';
+  $image_h = '1196';
+
+  //トップページ
+  if(is_front_page()){
+    $url = esc_url(home_url('/'));
+    $description = esc_attr(get_bloginfo('description'));
+    $type = 'website';
+  }
+
+  //記事・固定ページ
+  if(is_singular() && ! is_front_page()){
+    $url = esc_url(get_permalink());
+    $description = esc_attr(get_the_excerpt());
+    $type = 'article';
+
+    //アイキャッチ画像
+    $image_id = get_post_thumbnail_id();
+    if($image_id){
+      $image_url = esc_url(wp_get_attachment_url($image_id));
+      $image_w = esc_attr(wp_get_attachment_metadata($image_id)['width']);
+      $image_h = esc_attr(wp_get_attachment_metadata($image_id)['height']);
+    }
+  }
+
+  if(is_front_page() || is_singular()){
+    ?>
+<meta property="og:site_name" content="<?php echo $site_name; ?>">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="<?php echo $title; ?>">
+<meta property="og:url" content="<?php echo $url; ?>">
+<meta property="og:image" content="<?php echo $image_url; ?>">
+<meta property="og:image:width" content="<?php echo $image_w; ?>">
+<meta property="og:image:height" content="<?php echo $image_h; ?>">
+<meta property="og:description" content="<?php echo $description; ?>">
+<meta property="og:type" content="<?php echo $type; ?>">
+<meta name="twitter:card" content="summary_large_image">
+<?php
+  }
+}
+add_action('wp_head', 'mytheme_meta');

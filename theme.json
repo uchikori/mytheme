@@ -14,6 +14,7 @@
 		"color": {
 			"custom": true,
 			"customGradient": true,
+			"defaultPalette": false,
 			"palette": [
 				{
 					"color": "#FFFFFF",
@@ -62,6 +63,7 @@
 			"wideSize": "980px"
 		},
 		"spacing": {
+			"customSpacingSize": true,
 			"defaultSpacingSizes": false,
 			"spacingSizes": [
 				{
@@ -105,6 +107,7 @@
 			]
 		},
 		"typography": {
+			"customFontSize": false,
 			"defaultFontSizes": false,
 			"fluid": true,
 			"fontFamilies": [
