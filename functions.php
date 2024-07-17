@@ -74,6 +74,6 @@ function mytheme_block_pattern(){
     array('label' => 'My Page Base')
   );
 
-  remove_theme_support('core-block-patterns');
+  // remove_theme_support('core-block-patterns');
 }
 add_action('init', 'mytheme_block_pattern');
