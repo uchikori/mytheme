@@ -60,8 +60,20 @@ function mytheme_register_block_styles(){
     'core/columns',
     array(
       'name' => 'reverse',
-      'slug' => 'モバイル逆順'
+      'label' => 'モバイル逆順'
     )
   );
 }
 add_action('init', 'mytheme_register_block_styles');
+
+//ブロックパターンのカテゴリー
+function mytheme_block_pattern(){
+  //My Page Baseカテゴリーを追加
+  register_block_pattern_category(
+    'mypagebase',
+    array('label' => 'My Page Base')
+  );
+
+  remove_theme_support('core-block-patterns');
+}
+add_action('init', 'mytheme_block_pattern');
