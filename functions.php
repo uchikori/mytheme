@@ -142,3 +142,40 @@ function mytheme_meta(){
   }
 }
 add_action('wp_head', 'mytheme_meta');
+
+add_action( 'init', function () {
+
+  register_meta(
+      'post',
+      'shop-address',
+      [
+          'show_in_rest' => true,
+          'single'       => true,
+          'type'         => 'string',
+          'default'      => 'shop-address',
+      ]
+  );
+  
+  register_meta(
+      'post',
+      'shop-tel',
+      [
+          'show_in_rest' => true,
+          'single'       => true,
+          'type'         => 'string',
+          'default'      => 'shop-tel',
+      ]
+  );
+
+  register_meta(
+      'post',
+      'shop-dayTime',
+      [
+          'show_in_rest' => true,
+          'single'       => true,
+          'type'         => 'string',
+          'default'      => 'shop-dayTime',
+      ]
+  );
+  
+  } );
