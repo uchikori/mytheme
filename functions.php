@@ -15,6 +15,16 @@ function mytheme_enqueue(){
 }
 add_action('wp_enqueue_scripts', 'mytheme_enqueue');
 
+function custom_image_block_enqueue_scripts() {
+    wp_enqueue_script(
+        'custom-image-block-editor',
+        get_template_directory_uri() . '/assets/js/block-editor.js',
+        array( 'wp-blocks', 'wp-editor', 'wp-element', 'wp-components' )
+    );
+    
+}
+add_action( 'enqueue_block_editor_assets', 'custom_image_block_enqueue_scripts' );
+
 //ブロックスタイルを追加
 function mytheme_register_block_styles(){
   //見出し・飾り枠付き
@@ -61,6 +71,35 @@ function mytheme_register_block_styles(){
     array(
       'name' => 'reverse',
       'label' => 'モバイル逆順'
+    )
+  );
+  register_block_style(
+    'core/group',
+    array(
+      'name' => 'absolute-position',
+      'label' => '絶対配置'
+    )
+  );
+  register_block_style(
+    'core/cover',
+    array(
+      'name' => 'absolute-position-right',
+      'label' => '絶対配置右寄せ'
+    )
+  );
+  register_block_style(
+    'core/cover',
+    array(
+      'name' => 'absolute-position-left',
+      'label' => '絶対配置左寄せ'
+    )
+  );
+
+  register_block_style(
+    'core/image',
+    array(
+      'name' => 'absolute-position',
+      'label' => '絶対配置'
     )
   );
 }
@@ -178,4 +217,23 @@ add_action( 'init', function () {
       ]
   );
   
-  } );
+} );
+
+function assign_taxonomyname(){
+  global $wp_taxonomies;
+    // タクソノミー1の権限を変更
+  if (isset($wp_taxonomies['category'])) {
+    $wp_taxonomies['category']->cap->assign_terms = 'custompost_editor';
+    $wp_taxonomies['category']->cap->manage_terms = 'custompost_editor';
+    $wp_taxonomies['category']->cap->edit_terms = 'custompost_editor';
+    $wp_taxonomies['category']->cap->delet_terms = 'custompost_editor';
+  }
+    // タクソノミー2の権限を変更
+  if (isset($wp_taxonomies['newscategory'])) {
+    $wp_taxonomies['newscategory']->cap->assign_terms = 'custompost_editor';
+    $wp_taxonomies['newscategory']->cap->manage_terms = 'custompost_editor';
+    $wp_taxonomies['newscategory']->cap->edit_terms = 'custompost_editor';
+    $wp_taxonomies['newscategory']->cap->delete_terms = 'custompost_editor';
+  }
+}
+add_action('init', 'assign_taxonomyname');
