@@ -12,6 +12,7 @@ add_action('after_setup_theme', 'mytheme_soppurts');
 function mytheme_enqueue(){
   //テーマのCSS(style.css)をフロントに読み込む
   wp_enqueue_style('mytheme_style', get_stylesheet_uri(), array(), filemtime(get_theme_file_path('style.css')));
+  wp_enqueue_script('mytheme_script', get_template_directory_uri() . '/assets/js/block-editor.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'mytheme_enqueue');
 
@@ -97,6 +98,13 @@ function mytheme_register_block_styles(){
 
   register_block_style(
     'core/image',
+    array(
+      'name' => 'absolute-position',
+      'label' => '絶対配置'
+    )
+  );
+  register_block_style(
+    'core/heading',
     array(
       'name' => 'absolute-position',
       'label' => '絶対配置'
