@@ -19,7 +19,7 @@ add_action('wp_enqueue_scripts', 'mytheme_enqueue');
 function custom_image_block_enqueue_scripts() {
     wp_enqueue_script(
         'custom-image-block-editor',
-        get_template_directory_uri() . '/assets/js/block-editor.js',
+        get_theme_file_uri('assets/js/block-editor.js'),
         array( 'wp-blocks', 'wp-editor', 'wp-element', 'wp-components' )
     );
     

@@ -192,14 +192,19 @@ p.is-style-scroll-down::before {
 }
 
 .ly_header .bl_crossBtn {
+  width: 24px;
+  aspect-ratio: 1/1;
   display: none;
   z-index: 9999;
   position: relative;
 }
+.ly_header .bl_crossBtn .wp-block-button__link {
+  display: none;
+}
 .bl_crossBtn::before,
 .bl_crossBtn::after {
   content: "";
-  width: 1.5rem;
+  width: 100%;
   height: 2px;
   background-color: black;
   display: block;
@@ -216,6 +221,7 @@ p.is-style-scroll-down::before {
 
   .el_gNavi {
     flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
   }
   .el_subNavi {
@@ -230,9 +236,7 @@ p.is-style-scroll-down::before {
     z-index: 100;
     background-color: #fff;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    gap: 2rem;
     opacity: 0;
     pointer-events: none;
   }
@@ -241,8 +245,18 @@ p.is-style-scroll-down::before {
     pointer-events: all;
   }
 
+  .ly_header_navi .ly_header_naviInner {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
   .ly_header .bl_crossBtn {
     display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .bl_crossBtn.is-open::before {
     transform: rotate(45deg) translateY(7px);
