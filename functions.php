@@ -95,6 +95,13 @@ function mytheme_register_block_styles(){
       'label' => '絶対配置左寄せ'
     )
   );
+  register_block_style(
+    'core/cover',
+    array(
+      'name' => 'fixed-height',
+      'label' => '高さ固定'
+    )
+  );
 
   register_block_style(
     'core/image',
@@ -227,21 +234,62 @@ add_action( 'init', function () {
   
 } );
 
-function assign_taxonomyname(){
-  global $wp_taxonomies;
-    // タクソノミー1の権限を変更
-  if (isset($wp_taxonomies['category'])) {
-    $wp_taxonomies['category']->cap->assign_terms = 'custompost_editor';
-    $wp_taxonomies['category']->cap->manage_terms = 'custompost_editor';
-    $wp_taxonomies['category']->cap->edit_terms = 'custompost_editor';
-    $wp_taxonomies['category']->cap->delet_terms = 'custompost_editor';
-  }
-    // タクソノミー2の権限を変更
-  if (isset($wp_taxonomies['newscategory'])) {
-    $wp_taxonomies['newscategory']->cap->assign_terms = 'custompost_editor';
-    $wp_taxonomies['newscategory']->cap->manage_terms = 'custompost_editor';
-    $wp_taxonomies['newscategory']->cap->edit_terms = 'custompost_editor';
-    $wp_taxonomies['newscategory']->cap->delete_terms = 'custompost_editor';
-  }
+// function assign_taxonomyname(){
+//   global $wp_taxonomies;
+//     // タクソノミー1の権限を変更
+//   if (isset($wp_taxonomies['category'])) {
+//     $wp_taxonomies['category']->cap->assign_terms = 'custompost_editor';
+//     $wp_taxonomies['category']->cap->manage_terms = 'custompost_editor';
+//     $wp_taxonomies['category']->cap->edit_terms = 'custompost_editor';
+//     $wp_taxonomies['category']->cap->delet_terms = 'custompost_editor';
+//   }
+//     // タクソノミー2の権限を変更
+//   if (isset($wp_taxonomies['newscategory'])) {
+//     $wp_taxonomies['newscategory']->cap->assign_terms = 'custompost_editor';
+//     $wp_taxonomies['newscategory']->cap->manage_terms = 'custompost_editor';
+//     $wp_taxonomies['newscategory']->cap->edit_terms = 'custompost_editor';
+//     $wp_taxonomies['newscategory']->cap->delete_terms = 'custompost_editor';
+//   }
+// }
+// add_action('init', 'assign_taxonomyname');
+
+//表示期間を過ぎた投稿を非公開にする
+function register_display_period_check_event() {
+    if (!wp_next_scheduled('check_display_period_event')) {
+        wp_schedule_event(time(), 'hourly', 'check_display_period_event');
+    }
 }
-add_action('init', 'assign_taxonomyname');
+add_action('wp', 'register_display_period_check_event');
+
+function check_display_period_and_update_status() {
+    $posts = get_posts(array(
+        'post_type' => 'post',
+        'posts_per_page' => -1, 
+        'post_status' => 'publish',
+        'meta_query' => array(
+            array(
+                'key' => 'display_period',
+                'value' => date('Ymd'),
+                'compare' => '<',
+            )
+        )
+    ));
+
+    foreach ($posts as $post) {
+        $post_id = $post->ID;
+        wp_update_post(array(
+            'ID' => $post_id,
+            'post_status' => 'draft',
+        ));
+    }
+} 
+add_action('check_display_period_event', 'check_display_period_and_update_status');
+
+// プラグイン/テーマが無効化された場合にスケジュールをクリア
+function clear_display_period_check_event() {
+    $timestamp = wp_next_scheduled('check_display_period_event');
+    if ($timestamp) {
+        wp_unschedule_event($timestamp, 'check_display_period_event');
+    }
+}
+register_deactivation_hook(__FILE__, 'clear_display_period_check_event');
