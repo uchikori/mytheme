@@ -13,6 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: mytheme
 Tags: 
 */
+
 @keyframes scroll {
   0% {
     top: 0%;
@@ -86,11 +87,6 @@ p.is-style-scroll-down::before {
 }
 #category-tabs .tabs li {
   cursor: pointer;
-}
-@media (max-width: 781px) {
-  .wp-block-columns.is-style-reverse {
-    flex-direction: column-reverse;
-  }
 }
 
 .wp-block-group.is-style-absolute-position {
@@ -224,6 +220,48 @@ p.is-style-scroll-down::before {
   transform: rotate(0) translateY(0);
   transition: all 0.3s ease;
 }
+.wp-block-button.is-style-has-arrow > * {
+  display: flex;
+  justify-content: space-between;
+}
+.wp-block-button.is-style-has-arrow > *:hover:after {
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
+}
+.wp-block-button.is-style-has-arrow > *::after {
+  content: "";
+  width: 24px;
+  aspect-ratio: 1/1;
+  display: block;
+  background-image: url(./assets/images/solar_arrow-right-broken.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: translateX(0px);
+  transition: transform 0.3s ease;
+}
+.lpbLottiePlayer {
+  line-height: 1 !important;
+}
+table {
+  border-color: #cccccc;
+}
+table tbody {
+  border-color: #cccccc;
+}
+table tbody td {
+  border-color: #cccccc !important;
+}
+.is-style-th-topLeft table tr:first-child {
+  background-color: #e7eef9;
+}
+.is-style-th-topLeft table tr td:first-child {
+  background-color: #e7eef9;
+}
+
+.is-style-th-left table tr td:first-child {
+  background-color: #e7eef9;
+}
 @media screen and (max-width: 1024px) {
   .ab-sec .col-1 .wp-block-columns-is-layout-flex {
     position: static;
@@ -278,5 +316,10 @@ p.is-style-scroll-down::before {
   .bl_crossBtn.is-open::after {
     transform: rotate(-45deg) translateY(-7px);
     transition: all 0.3s ease;
+  }
+}
+@media (max-width: 781px) {
+  .wp-block-columns.is-style-reverse {
+    flex-direction: column-reverse;
   }
 }

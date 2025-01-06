@@ -117,6 +117,27 @@ function mytheme_register_block_styles(){
       'label' => '絶対配置'
     )
   );
+  register_block_style(
+    'core/button',
+    array(
+      'name' => 'has-arrow',
+      'label' => '矢印付き'
+    )
+  );
+  register_block_style(
+    'core/table',
+    array(
+      'name' => 'th-left',
+      'label' => '左見出し'
+    )
+  );
+  register_block_style(
+    'core/table',
+    array(
+      'name' => 'th-topLeft',
+      'label' => '上部と左見出し'
+    )
+  );
 }
 add_action('init', 'mytheme_register_block_styles');
 
@@ -263,23 +284,19 @@ add_action('wp', 'register_display_period_check_event');
 
 function check_display_period_and_update_status() {
     $posts = get_posts(array(
-        'post_type' => 'post',
+        'post_type' => 'news',
         'posts_per_page' => -1, 
         'post_status' => 'publish',
-        'meta_query' => array(
-            array(
-                'key' => 'display_period',
-                'value' => date('Ymd'),
-                'compare' => '<',
-            )
-        )
+        'meta_key' => 'display_period',
+        'meta_value' => date('Ymd'),
+        'meta_compare' => '<',
     ));
 
     foreach ($posts as $post) {
         $post_id = $post->ID;
         wp_update_post(array(
             'ID' => $post_id,
-            'post_status' => 'draft',
+            'post_status' => 'private',
         ));
     }
 } 
