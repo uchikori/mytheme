@@ -262,6 +262,30 @@ table tbody td {
 .is-style-th-left table tr td:first-child {
   background-color: #e7eef9;
 }
+p.is-style-brackets {
+  border: none;
+  position: relative;
+}
+p.is-style-brackets::after,
+p.is-style-brackets::before {
+  content: "";
+  display: block;
+  width: 64px;
+  aspect-ratio: 1/1;
+  border-top: solid 8px #1e889b;
+  border-left: solid 8px #1e889b;
+}
+p.is-style-brackets::before {
+  position: absolute;
+  top: 0%;
+  left: 0;
+}
+p.is-style-brackets::after {
+  position: absolute;
+  bottom: 0%;
+  right: 0;
+  transform: rotateZ(180deg);
+}
 @media screen and (max-width: 1024px) {
   .ab-sec .col-1 .wp-block-columns-is-layout-flex {
     position: static;

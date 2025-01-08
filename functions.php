@@ -138,6 +138,13 @@ function mytheme_register_block_styles(){
       'label' => '上部と左見出し'
     )
   );
+  register_block_style(
+    'core/paragraph',
+    array(
+      'name' => 'brackets',
+      'label' => '括弧'
+    )
+  );
 }
 add_action('init', 'mytheme_register_block_styles');
 
